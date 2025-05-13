@@ -1,14 +1,18 @@
 import { AxiosError } from "axios";
-import { api } from "../../api";
-import { IProductService } from "../interfaces/IProduct";
-import { Product, ProductFilter, ProductPayload } from "../models/Product";
+import { api } from "../api";
+import { IProductService } from "./interfaces/iproduct-service";
+import {
+  Product,
+  ProductFilter,
+  ProductPayload,
+} from "../view/product/product.type";
 import {
   HTTP_STATUS,
   HttpError,
   MessageResponse,
   SuccessResponse,
   getHttpError,
-} from "../../api/http";
+} from "../api/http";
 
 export class ProductService implements IProductService {
   async fetchProducts(filter: ProductFilter): Promise<Product[]> {
@@ -17,7 +21,7 @@ export class ProductService implements IProductService {
         "/product",
         {
           params: filter,
-        },
+        }
       );
       return status != HTTP_STATUS.NO_CONTENT ? productData : [];
     } catch {
@@ -26,12 +30,12 @@ export class ProductService implements IProductService {
   }
 
   async createProduct(
-    productPayload: ProductPayload,
+    productPayload: ProductPayload
   ): Promise<SuccessResponse> {
     try {
       const { data } = await api.post<SuccessResponse>(
         "/product",
-        productPayload,
+        productPayload
       );
       return data!;
     } catch (error) {
@@ -44,12 +48,12 @@ export class ProductService implements IProductService {
 
   async updateProduct(
     productId: number,
-    productPayload: ProductPayload,
+    productPayload: ProductPayload
   ): Promise<MessageResponse> {
     try {
       const { data } = await api.put<MessageResponse>(
         `/product/${productId}`,
-        productPayload,
+        productPayload
       );
 
       return data;
@@ -64,7 +68,7 @@ export class ProductService implements IProductService {
   async deleteProduct(productId: number): Promise<MessageResponse> {
     try {
       const { data } = await api.delete<MessageResponse>(
-        `/product/${productId}`,
+        `/product/${productId}`
       );
       return data;
     } catch (error) {

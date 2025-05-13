@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { ProductsForm } from "./product-form";
 import { ProductsTable } from "./ProductsTable";
-import { useProduct } from "../../controller/hooks/useProduct";
 import { FunnelSimple, Package } from "@phosphor-icons/react";
-import { ModalOpenButton } from "../../components/Modal/ModalOpenButton";
-import { MODAL_TYPES } from "../../components/Modal/types";
-import { ProductsFilter } from "./ProductsFilter";
-import { Product } from "../../domain/models/Product";
+import { ModalOpenButton } from "../../components/modal/modal-open-button";
+import { MODALS } from "../../components/modal/types";
+import { ProductsFilter } from "./product-filter";
+import { Product } from "./product.type";
 
 export function ProductsList() {
   const [productToEdit, setProductToEdit] = useState<Product>();
-  const { products, handleDeleteProduct } = useProduct();
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false);
 
   const handleOpenUpdateModal = (product: Product) => {
@@ -35,7 +33,7 @@ export function ProductsList() {
           >
             <ModalOpenButton
               type="button"
-              targetId={MODAL_TYPES.productForm}
+              targetId={MODALS.PRODUCT_FORM}
               className="btn btn-dark d-flex gap-3 align-items-center"
             >
               Adicionar Produto {<Package size={32} />}
@@ -56,14 +54,12 @@ export function ProductsList() {
         </header>
         <main className="container-fluid p-5">
           <ProductsTable
-            products={products}
             onEdit={handleOpenUpdateModal}
-            onDelete={handleDeleteProduct}
-            // onChangeStock={handleChangeStock}
+            // onDelete={async (id: number) => {}}
           />
         </main>
       </div>
-      <ProductsForm id={MODAL_TYPES.productForm} product={productToEdit} />
+      <ProductsForm id={MODALS.PRODUCT_FORM} product={productToEdit} />
     </>
   );
 }

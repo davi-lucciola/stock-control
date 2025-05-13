@@ -1,16 +1,35 @@
+import { useState } from "react";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { HttpError, HttpWarning } from "./api/http";
 import { StockList } from "./view/inventory";
 import { ProductsList } from "./view/product";
-import { ProductContextProvider } from "./controller/contexts/ProductContext";
-import { ProductService } from "./domain/services/ProductService";
-import { StockService } from "./domain/services/StockService";
-import { ToastContainer } from "react-toastify";
-import { ServiceContextProvider } from "./controller/contexts/service-context";
+import { ProductService } from "./services/product-service";
+import { StockService } from "./services/stock-service";
+import { toast, ToastContainer } from "react-toastify";
+import { ServiceContextProvider } from "./services/service-provider";
 import "react-toastify/ReactToastify.css";
-import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export function App() {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onError: (error) => {
+            if (error instanceof HttpWarning) {
+              toast.warn(error.message);
+            } else if (error instanceof HttpError) {
+              toast.error(error.message);
+            } else {
+              toast.error("Houve um erro ao realizar sua solicitação.");
+            }
+          },
+        }),
+      })
+  );
   const stockService = new StockService();
   const productService = new ProductService();
 
@@ -21,10 +40,8 @@ export function App() {
           stockService={stockService}
           productService={productService}
         >
-          <ProductContextProvider productService={productService}>
-            <StockList />
-            <ProductsList />
-          </ProductContextProvider>
+          <StockList />
+          <ProductsList />
         </ServiceContextProvider>
       </QueryClientProvider>
       <ToastContainer
