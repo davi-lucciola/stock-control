@@ -1,6 +1,6 @@
 import { ReactNode, createContext } from "react";
-import { IProductService } from "../../domain/interfaces/IProduct";
-import { IStockService } from "../../domain/interfaces/IStock";
+import { IProductService } from "./interfaces/iproduct-service";
+import { IStockService } from "./interfaces/istock-service";
 
 type IServiceContextData = {
   stockService: IStockService;

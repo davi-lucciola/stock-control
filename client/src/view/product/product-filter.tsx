@@ -1,27 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useProduct } from "../../controller/hooks/useProduct";
-import { ProductFilter } from "../../domain/models/Product";
+// import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { useProductFilterStore } from "./product.store";
 
 export function ProductsFilter() {
-  const { getProducts } = useProduct();
-  const [productFilter, setProductFilter] = useState<ProductFilter>({
-    name: null,
-    minPrice: null,
-    maxPrice: null,
-  });
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value == "" ? null : event.target.value;
-    setProductFilter({
-      ...productFilter,
-      [event.target.name]: value,
-    });
-  };
-
-  const handleFilterProducts = (event: FormEvent) => {
-    event.preventDefault();
-    getProducts(productFilter);
-  };
+  const queryClient = useQueryClient();
+  const { filter, setFilters } = useProductFilterStore();
 
   return (
     <section className="container collapse w-100" id="product-filter">
@@ -35,8 +18,10 @@ export function ProductsFilter() {
             className="form-control"
             name="name"
             id="name"
-            value={!productFilter.name ? "" : productFilter.name}
-            onChange={handleInputChange}
+            value={!filter.name ? "" : filter.name}
+            onChange={(event) =>
+              setFilters({ ...filter, name: event.target.value })
+            }
           />
         </div>
         <div className="w-100 d-flex flex-column">
@@ -48,8 +33,14 @@ export function ProductsFilter() {
             className="form-control"
             name="minPrice"
             id="min-price"
-            value={!productFilter.minPrice ? "" : productFilter.minPrice}
-            onChange={handleInputChange}
+            value={!filter.minPrice ? "" : filter.minPrice}
+            onChange={(event) => {
+              const value = event.target.value;
+              setFilters({
+                ...filter,
+                minPrice: value ? Number(value) : undefined,
+              });
+            }}
           />
         </div>
         <div className="w-100 d-flex flex-column">
@@ -61,14 +52,22 @@ export function ProductsFilter() {
             className="form-control"
             name="maxPrice"
             id="max-price"
-            value={!productFilter.maxPrice ? "" : productFilter.maxPrice}
-            onChange={handleInputChange}
+            value={!filter.maxPrice ? "" : filter.maxPrice}
+            onChange={(event) => {
+              const value = event.target.value;
+              setFilters({
+                ...filter,
+                maxPrice: value ? Number(value) : undefined,
+              });
+            }}
           />
         </div>
         <button
-          type="submit"
+          type="button"
           className="btn btn-dark align-self-end"
-          onClick={handleFilterProducts}
+          onClick={() =>
+            queryClient.invalidateQueries({ queryKey: ["products"] })
+          }
         >
           Buscar
         </button>

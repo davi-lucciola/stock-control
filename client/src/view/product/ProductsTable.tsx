@@ -1,20 +1,39 @@
 import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
-import { Product } from "../../domain/models/Product";
-import { ModalOpenButton } from "../../components/Modal/ModalOpenButton";
-import { MODAL_TYPES } from "../../components/Modal/types";
+import { Product } from "./product.type";
+import { ModalOpenButton } from "../../components/modal/modal-open-button";
+import { MODALS } from "../../components/modal/types";
+import { useProductFilterStore } from "./product.store";
+import { useQuery } from "@tanstack/react-query";
+import { useService } from "../../services/use-service";
 // import { StockType } from "../../domain/models/Stock";
 
 type ProductsTableData = {
-  products: Product[];
   onEdit: (product: Product) => void;
-  onDelete: (productId: number) => Promise<void>;
+  // onDelete: (productId: number) => Promise<void>;
 };
 
 export function ProductsTable({
-  products,
   onEdit,
-  onDelete,
+  // onDelete,
 }: ProductsTableData) {
+  const { productService } = useService();
+  const { filter } = useProductFilterStore();
+
+  const { data: products, isPending } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => await productService.fetchProducts(filter),
+  });
+
+  if (isPending) {
+    return (
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <table className="container table table-striped table-bordered table-hover">
       <thead>
@@ -27,7 +46,6 @@ export function ProductsTable({
         </tr>
       </thead>
       <tbody>
-        {/* {!products && <div>Não Há Produtos...</div>}
         {products &&
           products.map((product) => {
             return (
@@ -44,7 +62,7 @@ export function ProductsTable({
                 <td className="d-flex justify-content-around gap-2">
                   <ModalOpenButton
                     type="button"
-                    targetId={MODAL_TYPES.changeStockForm}
+                    targetId={MODALS.CHANGE_STOCK_FORM}
                     className="btn btn-secondary d-flex align-items-center justify-content-center p-2"
                     // onClick={() => {
                     //   onChangeStock(product.id, "OUTPUT");
@@ -54,7 +72,7 @@ export function ProductsTable({
                   </ModalOpenButton>
                   <ModalOpenButton
                     type="button"
-                    targetId={MODAL_TYPES.changeStockForm}
+                    targetId={MODALS.CHANGE_STOCK_FORM}
                     className="btn btn-secondary d-flex align-items-center justify-content-center p-2"
                     // onClick={() => onChangeStock(product.id, "INPUT")}
                   >
@@ -62,7 +80,7 @@ export function ProductsTable({
                   </ModalOpenButton>
                   <ModalOpenButton
                     type="button"
-                    targetId={MODAL_TYPES.productForm}
+                    targetId={MODALS.PRODUCT_FORM}
                     className="btn btn-primary d-flex align-items-center justify-content-center p-2"
                     onClick={() => onEdit(product)}
                   >
@@ -70,14 +88,14 @@ export function ProductsTable({
                   </ModalOpenButton>
                   <button
                     className="btn btn-danger d-flex align-items-center justify-content-center p-2"
-                    onClick={() => onDelete(product.id)}
+                    // onClick={() => onDelete(product.id)}
                   >
                     <TrashSimple size={20} />
                   </button>
                 </td>
               </tr>
             );
-          })} */}
+          })}
       </tbody>
     </table>
   );

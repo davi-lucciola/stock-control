@@ -1,12 +1,12 @@
-import { Modal } from "../../components/Modal";
-import { BaseProps } from "../../components/BaseProps";
-import { ModalCloseButton } from "../../components/Modal/ModalCloseButton";
+import { Modal } from "../../components/modal";
+import { BaseProps } from "../../components/base-props";
+import { ModalCloseButton } from "../../components/modal/modal-close-button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductPayload, ProductSchema } from "./product.type";
-import { Product } from "../../domain/models/Product";
+import { Product } from "./product.type";
 import { useMutation } from "@tanstack/react-query";
-import { useService } from "../../controller/hooks/use-service";
+import { useService } from "../../services/use-service";
 
 type ProductFormProps = BaseProps & {
   product?: Product;
