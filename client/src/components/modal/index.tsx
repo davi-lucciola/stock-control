@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { ModalCloseButton } from "./modal-close-button";
-import { BaseProps } from "../base-props";
+import { BaseProps } from "@/components/base-props";
+import { ModalCloseButton } from "@/components/modal/modal-close-button";
 
 type ModalProps = BaseProps & {
   title: string;

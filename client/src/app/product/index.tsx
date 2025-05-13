@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ProductsForm } from "./product-form";
-import { ProductsTable } from "./ProductsTable";
+import { ProductsForm } from "@/app/product/product-form";
+import { ProductsTable } from "@/app/product/product-table";
 import { FunnelSimple, Package } from "@phosphor-icons/react";
-import { ModalOpenButton } from "../../components/modal/modal-open-button";
-import { MODALS } from "../../components/modal/types";
-import { ProductsFilter } from "./product-filter";
-import { Product } from "./product.type";
+import { Product } from "@/app/product/product.type";
+import { ProductsFilter } from "@/app/product/product-filter";
+import { MODALS } from "@/components/modal/types";
+import { ModalOpenButton } from "@/components/modal/modal-open-button";
 
 export function ProductsList() {
   const [productToEdit, setProductToEdit] = useState<Product>();

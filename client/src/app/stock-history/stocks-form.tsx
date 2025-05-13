@@ -1,7 +1,7 @@
 import { Modal } from "../../components/modal";
 import { ModalCloseButton } from "../../components/modal/modal-close-button";
 import { Product } from "../product/product.type";
-import { StockPaylod } from "../../models/stock";
+import { StockPaylod } from "./stock.type";
 
 type StocksFormProps = {
   id: string;

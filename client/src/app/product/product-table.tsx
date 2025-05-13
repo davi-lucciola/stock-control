@@ -1,10 +1,10 @@
-import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
-import { Product } from "./product.type";
-import { ModalOpenButton } from "../../components/modal/modal-open-button";
-import { MODALS } from "../../components/modal/types";
-import { useProductFilterStore } from "./product.store";
 import { useQuery } from "@tanstack/react-query";
-import { useService } from "../../services/use-service";
+import { useService } from "@/services/use-service";
+import { MODALS } from "@/components/modal/types";
+import { Product } from "@/app/product/product.type";
+import { ModalOpenButton } from "@/components/modal/modal-open-button";
+import { useProductFilterStore } from "@/app/product/product.store";
+import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
 // import { StockType } from "../../domain/models/Stock";
 
 type ProductsTableData = {

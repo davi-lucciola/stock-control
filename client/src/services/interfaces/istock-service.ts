@@ -1,4 +1,4 @@
-import { MessageResponse } from "../../api/http";
+import { MessageResponse } from "../../lib/http";
 import { Stock, StockFilter, StockPaylod } from "../../models/stock";
 
 export interface IStockService {
