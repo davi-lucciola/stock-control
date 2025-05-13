@@ -1,5 +1,5 @@
 import { MessageResponse } from "../../api/http";
-import { Stock, StockFilter, StockPaylod } from "../models/Stock";
+import { Stock, StockFilter, StockPaylod } from "../../models/stock";
 
 export interface IStockService {
   fetchStocks(stockFilter: StockFilter): Promise<Stock[]>;

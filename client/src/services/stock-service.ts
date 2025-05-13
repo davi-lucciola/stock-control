@@ -1,13 +1,13 @@
-import { api } from "../../api";
+import { api } from "../api";
 import { AxiosError } from "axios";
 import {
   HTTP_STATUS,
   HttpError,
   MessageResponse,
   getHttpError,
-} from "../../api/http";
-import { IStockService } from "../interfaces/IStock";
-import { Stock, StockFilter, StockPaylod } from "../models/Stock";
+} from "../api/http";
+import { IStockService } from "./interfaces/istock-service";
+import { Stock, StockFilter, StockPaylod } from "../models/stock";
 
 export class StockService implements IStockService {
   async fetchStocks(stockFilter: StockFilter): Promise<Stock[]> {
@@ -16,7 +16,7 @@ export class StockService implements IStockService {
         "/stock/history",
         {
           params: stockFilter,
-        },
+        }
       );
       return status != HTTP_STATUS.NO_CONTENT ? stockData : [];
     } catch (error) {
@@ -29,7 +29,7 @@ export class StockService implements IStockService {
     try {
       const { data } = await api.post<MessageResponse>(
         "/stock/in",
-        stockPayload,
+        stockPayload
       );
       return data;
     } catch (error) {

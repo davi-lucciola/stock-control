@@ -3,7 +3,7 @@
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useService } from "../../controller/hooks/use-service";
+import { useService } from "../../services/use-service";
 
 export function StockList() {
   const { stockService } = useService();
@@ -53,7 +53,7 @@ export function StockList() {
                             year: "numeric",
                             month: "numeric",
                             day: "numeric",
-                          },
+                          }
                         )}
                       </p>
                     </div>
