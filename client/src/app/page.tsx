@@ -1,16 +1,16 @@
-import { useState } from "react";
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { HttpError, HttpWarning } from "./api/http";
-import { StockList } from "./view/inventory";
-import { ProductsList } from "./view/product";
-import { ProductService } from "./services/product-service";
-import { StockService } from "./services/stock-service";
+import { useState } from "react";
+import { HttpError, HttpWarning } from "@/lib/http";
+import { StockList } from "@/app/stock-history";
+import { ProductsList } from "@/app/product";
+import { StockService } from "@/services/stock-service";
+import { ProductService } from "@/services/product-service";
 import { toast, ToastContainer } from "react-toastify";
-import { ServiceContextProvider } from "./services/service-provider";
+import { ServiceContextProvider } from "@/services/service-provider";
 import "react-toastify/ReactToastify.css";
 
 export function App() {

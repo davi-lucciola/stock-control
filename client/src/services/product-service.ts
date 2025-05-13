@@ -1,18 +1,18 @@
 import { AxiosError } from "axios";
-import { api } from "../api";
+import { api } from "../lib/api";
 import { IProductService } from "./interfaces/iproduct-service";
 import {
   Product,
   ProductFilter,
   ProductPayload,
-} from "../view/product/product.type";
+} from "../app/product/product.type";
 import {
   HTTP_STATUS,
   HttpError,
   MessageResponse,
   SuccessResponse,
   getHttpError,
-} from "../api/http";
+} from "../lib/http";
 
 export class ProductService implements IProductService {
   async fetchProducts(filter: ProductFilter): Promise<Product[]> {

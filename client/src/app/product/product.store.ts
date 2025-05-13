@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ProductFilter } from "./product.type";
+import { ProductFilter } from "@/app/product/product.type";
 
 type ProductFilterStore = {
   filter: ProductFilter;
