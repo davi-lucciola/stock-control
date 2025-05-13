@@ -1,6 +1,5 @@
-import { useStock } from "../../controller/hooks/useStock";
-import { Modal } from "../components/Modal";
-import { ModalCloseButton } from "../components/Modal/ModalCloseButton";
+import { Modal } from "../../components/Modal";
+import { ModalCloseButton } from "../../components/Modal/ModalCloseButton";
 import { Product } from "../../domain/models/Product";
 import { StockPaylod } from "../../domain/models/Stock";
 
@@ -11,33 +10,16 @@ type StocksFormProps = {
 };
 
 export function StocksForm({ id, product, stockPayload }: StocksFormProps) {
-  const {
-    setStockPayload,
-    handleInputChange,
-    handleAddStock,
-    handleRemoveStock,
-  } = useStock();
-
-  const onCloseStockForm = () =>
-    setTimeout(
-      () =>
-        setStockPayload({
-          productId: undefined,
-          quantity: 0,
-        }),
-      500,
-    );
-
   return (
     <Modal
       id={id}
       title={`${product ? product.name : ""} - ${stockPayload.type == "INPUT" ? "Entrada" : "Saída"}`}
-      onClose={onCloseStockForm}
+      // onClose={onCloseStockForm}
     >
       <form
-        onSubmit={
-          stockPayload.type == "INPUT" ? handleAddStock : handleRemoveStock
-        }
+        // onSubmit={
+        //   stockPayload.type == "INPUT" ? handleAddStock : handleRemoveStock
+        // }
         autoComplete="off"
       >
         <div className="modal-body">
@@ -50,13 +32,13 @@ export function StocksForm({ id, product, stockPayload }: StocksFormProps) {
               type="number"
               className="form-control"
               name="quantity"
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
             />
           </div>
         </div>
         <div className="modal-footer">
           <ModalCloseButton
-            onClick={onCloseStockForm}
+            // onClick={onCloseStockForm}
             type="submit"
             className="btn btn-primary"
           >
