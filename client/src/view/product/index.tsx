@@ -1,32 +1,29 @@
 import { useState } from "react";
-import { ProductsForm } from "./ProductsForm";
+import { ProductsForm } from "./product-form";
 import { ProductsTable } from "./ProductsTable";
 import { useProduct } from "../../controller/hooks/useProduct";
 import { FunnelSimple, Package } from "@phosphor-icons/react";
-import { ModalOpenButton } from "../components/Modal/ModalOpenButton";
-import { MODAL_TYPES } from "../components/Modal/types";
+import { ModalOpenButton } from "../../components/Modal/ModalOpenButton";
+import { MODAL_TYPES } from "../../components/Modal/types";
 import { ProductsFilter } from "./ProductsFilter";
-import { ProductPayload } from "../../domain/models/Product";
-import { useStock } from "../../controller/hooks/useStock";
-import { StockType } from "../../domain/models/Stock";
+import { Product } from "../../domain/models/Product";
 
 export function ProductsList() {
-  const { products, handleDeleteProduct, productPayload, setProductPayload } =
-    useProduct();
-  const { setStockPayload } = useStock();
+  const [productToEdit, setProductToEdit] = useState<Product>();
+  const { products, handleDeleteProduct } = useProduct();
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false);
 
-  const handleOpenUpdateModal = (productPayloadData: ProductPayload) => {
-    setProductPayload(productPayloadData);
+  const handleOpenUpdateModal = (product: Product) => {
+    setProductToEdit(product);
   };
 
-  const handleChangeStock = (productId: number, stockType: StockType) => {
-    setStockPayload({
-      productId: productId,
-      quantity: 0,
-      type: stockType,
-    });
-  };
+  // const handleChangeStock = (productId: number, stockType: StockType) => {
+  //   setStockPayload({
+  //     productId: productId,
+  //     quantity: 0,
+  //     type: stockType,
+  //   });
+  // };
 
   return (
     <>
@@ -62,14 +59,11 @@ export function ProductsList() {
             products={products}
             onEdit={handleOpenUpdateModal}
             onDelete={handleDeleteProduct}
-            onChangeStock={handleChangeStock}
+            // onChangeStock={handleChangeStock}
           />
         </main>
       </div>
-      <ProductsForm
-        id={MODAL_TYPES.productForm}
-        productPayload={productPayload}
-      />
+      <ProductsForm id={MODAL_TYPES.productForm} product={productToEdit} />
     </>
   );
 }

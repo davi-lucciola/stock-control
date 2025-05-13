@@ -1,18 +1,18 @@
-import { MODAL_TYPES } from "../components/Modal/types";
+// import { StocksForm } from "./StocksForm";
+// import { MODAL_TYPES } from "../../components/Modal/types";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useStock } from "../../controller/hooks/useStock";
-import { StocksForm } from "./StocksForm";
-import { useProduct } from "../../controller/hooks/useProduct";
+import { useQuery } from "@tanstack/react-query";
+import { useService } from "../../controller/hooks/use-service";
 
 export function StockList() {
-  const { products } = useProduct();
-  const { stocks, stockPayload } = useStock();
+  const { stockService } = useService();
   const [sideBarOpen, setSideBarOpen] = useState(true);
 
-  const productInForm = products
-    ? products.find((product) => product.id == stockPayload.productId)
-    : undefined;
+  const { data, isPending } = useQuery({
+    queryKey: ["stock-history"],
+    queryFn: async () => await stockService.fetchStocks({}),
+  });
 
   return (
     <>
@@ -27,8 +27,16 @@ export function StockList() {
           <h1 className="fs-3"> Movimentações </h1>
           <hr />
           <ul className="mt-5 d-flex flex-column gap-4" data-bs-spy="scroll">
-            {stocks.map((stock) => {
-              return (
+            {isPending && (
+              <div
+                className="spinner-border align-self-center text-light"
+                role="status"
+              >
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            )}
+            {!isPending &&
+              data?.map((stock) => (
                 <li
                   key={stock.id}
                   className={`d-flex text-white fw-bold card rounded ${
@@ -55,8 +63,7 @@ export function StockList() {
                     </span>
                   </div>
                 </li>
-              );
-            })}
+              ))}
           </ul>
         </aside>
         <button
@@ -70,11 +77,11 @@ export function StockList() {
           {sideBarOpen ? <CaretLeft size={20} /> : <CaretRight size={20} />}
         </button>
       </div>
-      <StocksForm
+      {/* <StocksForm
         id={MODAL_TYPES.changeStockForm}
         product={productInForm}
         stockPayload={stockPayload}
-      />
+      /> */}
     </>
   );
 }
