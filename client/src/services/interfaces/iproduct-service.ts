@@ -2,8 +2,8 @@ import {
   Product,
   ProductFilter,
   ProductPayload,
-} from "../../view/product/product.type";
-import { MessageResponse, SuccessResponse } from "../../api/http";
+} from "../../app/product/product.type";
+import { MessageResponse, SuccessResponse } from "../../lib/http";
 
 export interface IProductService {
   fetchProducts(filter: ProductFilter): Promise<Product[]>;

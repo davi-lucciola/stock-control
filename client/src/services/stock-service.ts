@@ -1,11 +1,11 @@
-import { api } from "../api";
+import { api } from "../lib/api";
 import { AxiosError } from "axios";
 import {
   HTTP_STATUS,
   HttpError,
   MessageResponse,
   getHttpError,
-} from "../api/http";
+} from "../lib/http";
 import { IStockService } from "./interfaces/istock-service";
 import { Stock, StockFilter, StockPaylod } from "../models/stock";
 

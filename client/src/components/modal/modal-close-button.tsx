@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BaseProps } from "../base-props";
+import { BaseProps } from "@/components/base-props";
 
 type ModalCloseButtonProps = BaseProps & {
   type: "submit" | "reset" | "button" | undefined;

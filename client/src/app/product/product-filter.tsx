@@ -1,6 +1,6 @@
 // import { useQueryClient } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { useProductFilterStore } from "./product.store";
+import { useProductFilterStore } from "@/app/product/product.store";
 
 export function ProductsFilter() {
   const queryClient = useQueryClient();
