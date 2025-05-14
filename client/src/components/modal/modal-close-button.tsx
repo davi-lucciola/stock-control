@@ -3,8 +3,8 @@ import { BaseProps } from "@/components/base-props";
 
 type ModalCloseButtonProps = BaseProps & {
   type: "submit" | "reset" | "button" | undefined;
-  children: ReactNode;
   disabled?: boolean;
+  children?: ReactNode;
 };
 
 export function ModalCloseButton({
