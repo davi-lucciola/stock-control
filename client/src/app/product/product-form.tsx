@@ -8,17 +8,29 @@ import { Modal } from "@/components/modal";
 import { BaseProps } from "@/components/base-props";
 import { ModalCloseButton } from "@/components/modal/modal-close-button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useService } from "@/services/use-service";
+import { toast } from "react-toastify";
+import { httpErrorHandler } from "@/lib/api";
 
 type ProductFormProps = BaseProps & {
   product?: Product;
 };
 
 export function ProductsForm({ id, className, product }: ProductFormProps) {
+  const queryClient = useQueryClient();
   const { productService } = useService();
 
-  const { mutateAsync: createUpdateProductMudation } = useMutation({
+  const form = useForm<ProductPayload>({
+    resolver: zodResolver(ProductSchema),
+    defaultValues: {
+      name: "",
+      price: undefined,
+    },
+  });
+  const { errors } = form.formState;
+
+  const { isPending, mutateAsync: createUpdateProductMudation } = useMutation({
     mutationFn: async (data: ProductPayload) => {
       if (product?.id) {
         return await productService.updateProduct(product.id, data);
@@ -26,24 +38,27 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
 
       return await productService.createProduct(data);
     },
+    onSuccess: (response) => {
+      toast.success(response.detail);
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+    onError: httpErrorHandler,
   });
 
-  const onCreateUpdateProduct = (data: ProductPayload) => {
-    return createUpdateProductMudation(data);
+  const onCreateUpdateProduct = async (data: ProductPayload) => {
+    return await createUpdateProductMudation(data);
   };
 
-  const form = useForm<ProductPayload>({
-    resolver: zodResolver(ProductSchema),
-    defaultValues: {
-      name: product?.name ?? "",
-      price: product?.price,
-    },
-  });
+  if (product) {
+    form.setValue("name", product.name);
+    form.setValue("price", product.price);
+  }
 
   return (
     <Modal
       id={id}
-      title={product?.id ? "Cadastrar Produto" : "Editar Produto"}
+      title={product?.id ? "Editar Produto" : "Cadastrar Produto"}
       className={className}
     >
       <form
@@ -62,6 +77,7 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
                 className="form-control"
                 {...form.register("name")}
               />
+              <p className="text-danger"> {errors.name?.message ?? ""} </p>
             </div>
             <div className="w-100 d-flex flex-column">
               <label htmlFor="price" className="form-label">
@@ -72,11 +88,16 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
                 className="form-control"
                 {...form.register("price")}
               />
+              <p className="text-danger"> {errors.price?.message ?? ""} </p>
             </div>
           </div>
         </div>
         <div className="modal-footer">
-          <ModalCloseButton type="submit" className="btn btn-primary">
+          <ModalCloseButton
+            type="submit"
+            className="btn btn-primary"
+            disabled={isPending}
+          >
             Salvar
           </ModalCloseButton>
         </div>

@@ -27,7 +27,6 @@ export class HttpWarning extends Error {}
 export class ErrorResponse extends MessageResponse {}
 
 export const getHttpError = (error: AxiosError<ErrorResponse>) => {
-  console.log(error);
   if (error.response!.status < HTTP_STATUS.INTERNAL_SERVER_ERROR) {
     throw new HttpWarning(error.response?.data.detail);
   } else if (error.response!.status >= HTTP_STATUS.INTERNAL_SERVER_ERROR) {

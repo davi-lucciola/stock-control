@@ -1,5 +1,6 @@
 import { api } from "../lib/api";
 import { AxiosError } from "axios";
+import { Stock, StockFilter, StockPaylod } from "@/app/stock/stock.type";
 import {
   HTTP_STATUS,
   HttpError,
@@ -7,7 +8,6 @@ import {
   getHttpError,
 } from "../lib/http";
 import { IStockService } from "./interfaces/istock-service";
-import { Stock, StockFilter, StockPaylod } from "../models/stock";
 
 export class StockService implements IStockService {
   async fetchStocks(stockFilter: StockFilter): Promise<Stock[]> {
