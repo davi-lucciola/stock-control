@@ -1,16 +1,12 @@
 FROM python:3.10-alpine
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /stockcontrol_api
 
-COPY poetry.lock pyproject.toml /stockcontrol_api/
-
-RUN pip3 install --upgrade pip &&\
-    pip3 install --no-cache-dir poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install 
-
+COPY uv.lock pyproject.toml /stockcontrol_api/
+RUN uv sync --locked --no-dev
 COPY . /stockcontrol_api
 
 EXPOSE 8080
 
-CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD uv run alembic upgrade head ; uv run uvicorn api.main:app --host 0.0.0.0 --port 8080
