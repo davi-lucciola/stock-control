@@ -5,17 +5,13 @@ import { Product } from "@/app/product/product.type";
 import { ModalOpenButton } from "@/components/modal/modal-open-button";
 import { useProductFilterStore } from "@/app/product/product.store";
 import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
-// import { StockType } from "../../domain/models/Stock";
 
 type ProductsTableData = {
   onEdit: (product: Product) => void;
-  // onDelete: (productId: number) => Promise<void>;
+  onDelete: (product: Product) => void;
 };
 
-export function ProductsTable({
-  onEdit,
-  // onDelete,
-}: ProductsTableData) {
+export function ProductsTable({ onEdit, onDelete }: ProductsTableData) {
   const { productService } = useService();
   const { filter } = useProductFilterStore();
 
@@ -86,12 +82,14 @@ export function ProductsTable({
                   >
                     <PencilSimple size={20} />
                   </ModalOpenButton>
-                  <button
+                  <ModalOpenButton
+                    type="button"
+                    targetId={MODALS.PRODUCT_DELETE}
                     className="btn btn-danger d-flex align-items-center justify-content-center p-2"
-                    // onClick={() => onDelete(product.id)}
+                    onClick={() => onDelete(product)}
                   >
                     <TrashSimple size={20} />
-                  </button>
+                  </ModalOpenButton>
                 </td>
               </tr>
             );

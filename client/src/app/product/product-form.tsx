@@ -50,11 +50,6 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
     return await createUpdateProductMudation(data);
   };
 
-  if (product) {
-    form.setValue("name", product.name);
-    form.setValue("price", product.price);
-  }
-
   return (
     <Modal
       id={id}
@@ -75,6 +70,7 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
               <input
                 type="text"
                 className="form-control"
+                value={product?.name ?? ""}
                 {...form.register("name")}
               />
               <p className="text-danger"> {errors.name?.message ?? ""} </p>
@@ -86,7 +82,14 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
               <input
                 type="number"
                 className="form-control"
+                value={product?.price ?? ""}
                 {...form.register("price")}
+                onChange={(event) =>
+                  form.setValue(
+                    "price",
+                    event.target.value ? Number(event.target.value) : 0
+                  )
+                }
               />
               <p className="text-danger"> {errors.price?.message ?? ""} </p>
             </div>

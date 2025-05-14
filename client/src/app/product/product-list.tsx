@@ -6,22 +6,11 @@ import { Product } from "@/app/product/product.type";
 import { ProductsFilter } from "@/app/product/product-filter";
 import { MODALS } from "@/components/modal/types";
 import { ModalOpenButton } from "@/components/modal/modal-open-button";
+import { ProductDelete } from "@/app/product/product-delete";
 
 export function ProductsList() {
-  const [productToEdit, setProductToEdit] = useState<Product>();
+  const [selectedProduct, setSelectedProduct] = useState<Product>();
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false);
-
-  const handleOpenUpdateModal = (product: Product) => {
-    setProductToEdit(product);
-  };
-
-  // const handleChangeStock = (productId: number, stockType: StockType) => {
-  //   setStockPayload({
-  //     productId: productId,
-  //     quantity: 0,
-  //     type: stockType,
-  //   });
-  // };
 
   return (
     <>
@@ -54,12 +43,17 @@ export function ProductsList() {
         </header>
         <main className="container-fluid p-5">
           <ProductsTable
-            onEdit={handleOpenUpdateModal}
-            // onDelete={async (id: number) => {}}
+            onEdit={setSelectedProduct}
+            onDelete={setSelectedProduct}
           />
         </main>
       </div>
-      <ProductsForm id={MODALS.PRODUCT_FORM} product={productToEdit} />
+      <ProductDelete
+        id={MODALS.PRODUCT_DELETE}
+        product={selectedProduct}
+        setProduct={setSelectedProduct}
+      />
+      <ProductsForm id={MODALS.PRODUCT_FORM} product={selectedProduct} />
     </>
   );
 }
