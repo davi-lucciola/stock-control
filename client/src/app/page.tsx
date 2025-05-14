@@ -5,8 +5,8 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 import { HttpError, HttpWarning } from "@/lib/http";
-import { StockList } from "@/app/stock-history";
-import { ProductsList } from "@/app/product";
+import { StockList } from "@/app/stock/stock-history";
+import { ProductsList } from "@/app/product/product-list";
 import { StockService } from "@/services/stock-service";
 import { ProductService } from "@/services/product-service";
 import { toast, ToastContainer } from "react-toastify";
