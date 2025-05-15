@@ -10,6 +10,6 @@ export const useProductFilterStore = create<ProductFilterStore>((set) => ({
 }));
 
 export const useSelectedProductStore = create<SelectedProductStore>((set) => ({
-  selectedProduct: undefined,
-  setSelectedProduct: (product) => set({ selectedProduct: product }),
+  product: undefined,
+  setProduct: (product) => set({ product }),
 }));

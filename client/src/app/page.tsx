@@ -5,8 +5,8 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 import { HttpError, HttpWarning } from "@/lib/http";
-import { StockList } from "@/app/stock/stock-history";
-import { ProductsList } from "@/app/product/product-list";
+import { StockIndex } from "@/app/stock";
+import { ProductsIndex } from "@/app/product";
 import { StockService } from "@/services/stock-service";
 import { ProductService } from "@/services/product-service";
 import { toast, ToastContainer } from "react-toastify";
@@ -40,8 +40,8 @@ export function App() {
           stockService={stockService}
           productService={productService}
         >
-          <StockList />
-          <ProductsList />
+          <StockIndex />
+          <ProductsIndex />
         </ServiceContextProvider>
       </QueryClientProvider>
       <ToastContainer

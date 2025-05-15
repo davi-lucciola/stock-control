@@ -1,22 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { useService } from "@/services/use-service";
 import { MODALS } from "@/components/modal/types";
 import { ModalOpenButton } from "@/components/modal/modal-open-button";
-import {
-  useProductFilterStore,
-  useSelectedProductStore,
-} from "@/app/product/product.store";
+import { useQueryProducts } from "@/app/product/hooks/use-query-products";
 import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
 
 export function ProductsTable() {
-  const { productService } = useService();
-  const { filter } = useProductFilterStore();
-  const { setSelectedProduct } = useSelectedProductStore();
-
-  const { data: products, isPending } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => await productService.fetchProducts(filter),
-  });
+  const { products, isPending, setProduct } = useQueryProducts();
 
   if (isPending) {
     return (
@@ -76,7 +64,7 @@ export function ProductsTable() {
                     type="button"
                     targetId={MODALS.PRODUCT_FORM}
                     className="btn btn-primary d-flex align-items-center justify-content-center p-2"
-                    onClick={() => setSelectedProduct(product)}
+                    onClick={() => setProduct(product)}
                   >
                     <PencilSimple size={20} />
                   </ModalOpenButton>
@@ -84,7 +72,7 @@ export function ProductsTable() {
                     type="button"
                     targetId={MODALS.PRODUCT_DELETE}
                     className="btn btn-danger d-flex align-items-center justify-content-center p-2"
-                    onClick={() => setSelectedProduct(product)}
+                    onClick={() => setProduct(product)}
                   >
                     <TrashSimple size={20} />
                   </ModalOpenButton>
