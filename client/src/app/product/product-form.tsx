@@ -1,8 +1,4 @@
-import {
-  Product,
-  ProductPayload,
-  ProductSchema,
-} from "@/app/product/product.type";
+import { ProductPayload, ProductSchema } from "@/app/product/product.type";
 import { useForm } from "react-hook-form";
 import { Modal } from "@/components/modal";
 import { BaseProps } from "@/components/base-props";
@@ -12,14 +8,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useService } from "@/services/use-service";
 import { toast } from "react-toastify";
 import { httpErrorHandler } from "@/lib/api";
+import { useSelectedProductStore } from "./product.store";
 
-type ProductFormProps = BaseProps & {
-  product?: Product;
-};
-
-export function ProductsForm({ id, className, product }: ProductFormProps) {
+export function ProductsForm({ id, className }: BaseProps) {
   const queryClient = useQueryClient();
   const { productService } = useService();
+  const { selectedProduct: product, setSelectedProduct } =
+    useSelectedProductStore();
 
   const form = useForm<ProductPayload>({
     resolver: zodResolver(ProductSchema),
@@ -41,6 +36,7 @@ export function ProductsForm({ id, className, product }: ProductFormProps) {
     onSuccess: (response) => {
       toast.success(response.detail);
       form.reset();
+      setSelectedProduct(undefined);
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: httpErrorHandler,

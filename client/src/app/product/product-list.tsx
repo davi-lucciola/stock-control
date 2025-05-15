@@ -2,14 +2,14 @@ import { useState } from "react";
 import { ProductsForm } from "@/app/product/product-form";
 import { ProductsTable } from "@/app/product/product-table";
 import { FunnelSimple, Package } from "@phosphor-icons/react";
-import { Product } from "@/app/product/product.type";
 import { ProductsFilter } from "@/app/product/product-filter";
 import { MODALS } from "@/components/modal/types";
 import { ModalOpenButton } from "@/components/modal/modal-open-button";
 import { ProductDelete } from "@/app/product/product-delete";
+import { useSelectedProductStore } from "./product.store";
 
 export function ProductsList() {
-  const [selectedProduct, setSelectedProduct] = useState<Product>();
+  const { setSelectedProduct } = useSelectedProductStore();
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false);
 
   return (
@@ -23,6 +23,7 @@ export function ProductsList() {
             <ModalOpenButton
               type="button"
               targetId={MODALS.PRODUCT_FORM}
+              onClick={() => setSelectedProduct(undefined)}
               className="btn btn-dark d-flex gap-3 align-items-center"
             >
               Adicionar Produto {<Package size={32} />}
@@ -42,18 +43,11 @@ export function ProductsList() {
           <ProductsFilter />
         </header>
         <main className="container-fluid p-5">
-          <ProductsTable
-            onEdit={setSelectedProduct}
-            onDelete={setSelectedProduct}
-          />
+          <ProductsTable />
         </main>
       </div>
-      <ProductDelete
-        id={MODALS.PRODUCT_DELETE}
-        product={selectedProduct}
-        setProduct={setSelectedProduct}
-      />
-      <ProductsForm id={MODALS.PRODUCT_FORM} product={selectedProduct} />
+      <ProductsForm id={MODALS.PRODUCT_FORM} />
+      <ProductDelete id={MODALS.PRODUCT_DELETE} />
     </>
   );
 }

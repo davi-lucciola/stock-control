@@ -1,32 +1,24 @@
 import { Modal } from "@/components/modal";
 import { BaseProps } from "@/components/base-props";
-import { Product } from "@/app/product/product.type";
 import { ModalCloseButton } from "@/components/modal/modal-close-button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useService } from "@/services/use-service";
 import { httpErrorHandler } from "@/lib/api";
 import { toast } from "react-toastify";
+import { useSelectedProductStore } from "./product.store";
 
-type ProductDeleteConfirmprops = BaseProps & {
-  product?: Product;
-  setProduct: (product?: Product) => void;
-};
-
-export function ProductDelete({
-  id,
-  className,
-  product,
-  setProduct,
-}: ProductDeleteConfirmprops) {
+export function ProductDelete({ id, className }: BaseProps) {
   const queryClient = useQueryClient();
   const { productService } = useService();
+  const { selectedProduct: product, setSelectedProduct } =
+    useSelectedProductStore();
 
   const { mutateAsync: deleteProductMutation } = useMutation({
     mutationFn: async (productId: number) =>
       productService.deleteProduct(productId),
     onSuccess: (response) => {
       toast.success(response.detail);
-      setProduct(undefined);
+      setSelectedProduct(undefined);
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: httpErrorHandler,
