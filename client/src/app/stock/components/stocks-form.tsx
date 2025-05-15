@@ -1,28 +1,25 @@
-import { Modal } from "../../../components/modal";
-import { ModalCloseButton } from "../../../components/modal/modal-close-button";
-import { Product } from "../../product/product.type";
-import { StockPaylod } from "../stock.type";
+import { Modal } from "@/components/modal";
+import { BaseProps } from "@/components/base-props";
+import { ModalCloseButton } from "@/components/modal/modal-close-button";
+import { useMutateStock } from "@/app/stock/hooks/use-mutate-stock";
 
-type StocksFormProps = {
-  id: string;
-  product?: Product;
-  stockPayload: StockPaylod;
-};
+export function StocksForm({ id, className }: BaseProps) {
+  const { form, product, stockType, handleMutateStock } = useMutateStock();
 
-export function StocksForm({ id, product, stockPayload }: StocksFormProps) {
   return (
     <Modal
       id={id}
-      title={`${product ? product.name : ""} - ${stockPayload.type == "INPUT" ? "Entrada" : "Saída"}`}
-      // onClose={onCloseStockForm}
+      className={className}
+      title={`${product ? product.name : ""} - ${stockType == "INPUT" ? "Entrada" : "Saída"}`}
     >
-      <form
-        // onSubmit={
-        //   stockPayload.type == "INPUT" ? handleAddStock : handleRemoveStock
-        // }
-        autoComplete="off"
-      >
+      <form onSubmit={form.handleSubmit(handleMutateStock)} autoComplete="off">
         <div className="modal-body">
+          <input
+            id="productId"
+            type="hidden"
+            className="form-control"
+            {...form.register("productId")}
+          />
           <div className="w-100 d-flex flex-column">
             <label htmlFor="name" className="form-label">
               Quantidade
@@ -31,18 +28,14 @@ export function StocksForm({ id, product, stockPayload }: StocksFormProps) {
               id="quantity"
               type="number"
               className="form-control"
-              name="quantity"
-              // onChange={handleInputChange}
+              {...form.register("quantity")}
             />
           </div>
         </div>
         <div className="modal-footer">
-          <ModalCloseButton
-            // onClick={onCloseStockForm}
-            type="submit"
-            className="btn btn-primary"
-          >
-            {stockPayload.type == "INPUT" ? "Adicionar" : "Remover"}
+          <button type="submit"> </button>
+          <ModalCloseButton type="submit" className="btn btn-primary">
+            {stockType == "INPUT" ? "Adicionar" : "Remover"}
           </ModalCloseButton>
         </div>
       </form>

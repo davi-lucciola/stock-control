@@ -1,13 +1,13 @@
-import { api } from "../lib/api";
-import { AxiosError } from "axios";
-import { Stock, StockFilter, StockPaylod } from "@/app/stock/stock.type";
 import {
   HTTP_STATUS,
   HttpError,
   MessageResponse,
   getHttpError,
-} from "../lib/http";
-import { IStockService } from "./interfaces/istock-service";
+} from "@/lib/http";
+import { api } from "@/lib/api";
+import { AxiosError } from "axios";
+import { IStockService } from "@/services/interfaces/istock-service";
+import { Stock, StockFilter, StockPayload } from "@/app/stock/stock.type";
 
 export class StockService implements IStockService {
   async fetchStocks(stockFilter: StockFilter): Promise<Stock[]> {
@@ -24,8 +24,7 @@ export class StockService implements IStockService {
     }
   }
 
-  async registerStockIn(stockPayload: StockPaylod): Promise<MessageResponse> {
-    delete stockPayload.type;
+  async registerStockIn(stockPayload: StockPayload): Promise<MessageResponse> {
     try {
       const { data } = await api.post<MessageResponse>(
         "/stock/in",
@@ -40,8 +39,7 @@ export class StockService implements IStockService {
     }
   }
 
-  async registerStockOut(stockPayload: StockPaylod): Promise<MessageResponse> {
-    delete stockPayload.type;
+  async registerStockOut(stockPayload: StockPayload): Promise<MessageResponse> {
     try {
       const { data } = await api.delete<MessageResponse>("/stock/out", {
         data: stockPayload,

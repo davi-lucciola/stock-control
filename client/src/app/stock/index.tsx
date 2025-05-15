@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
-import { StockList } from "./components/stock-list";
+import { MODALS } from "@/components/modal/types";
+import { StockList } from "@/app/stock/components/stock-list";
+import { StocksForm } from "@/app/stock/components/stocks-form";
 
 export function StockIndex() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -30,11 +32,7 @@ export function StockIndex() {
           {sideBarOpen ? <CaretLeft size={20} /> : <CaretRight size={20} />}
         </button>
       </div>
-      {/* <StocksForm
-        id={MODAL_TYPES.changeStockForm}
-        product={productInForm}
-        stockPayload={stockPayload}
-      /> */}
+      <StocksForm id={MODALS.CHANGE_STOCK_FORM} />
     </>
   );
 }

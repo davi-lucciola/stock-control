@@ -13,16 +13,6 @@ export type ProductFilter = {
   maxPrice?: number;
 };
 
-export type ProductFilterStore = {
-  filter: ProductFilter;
-  setFilters: (filter?: ProductFilter) => void;
-};
-
-export type SelectedProductStore = {
-  product?: Product;
-  setProduct: (product?: Product) => void;
-};
-
 export const ProductSchema = z.object({
   name: z.string().trim(),
   price: z.coerce
