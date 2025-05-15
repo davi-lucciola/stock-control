@@ -19,8 +19,8 @@ export type ProductFilterStore = {
 };
 
 export type SelectedProductStore = {
-  selectedProduct?: Product;
-  setSelectedProduct: (selectedProduct?: Product) => void;
+  product?: Product;
+  setProduct: (product?: Product) => void;
 };
 
 export const ProductSchema = z.object({
