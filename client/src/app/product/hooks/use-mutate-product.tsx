@@ -29,10 +29,10 @@ export function useMutateProduct() {
 
       return await productService.createProduct(data);
     },
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       form.reset();
       toast.success(response.detail);
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      await queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: httpErrorHandler,
   });
