@@ -9,7 +9,7 @@ type ModalProps = BaseProps & {
 
 export function Modal({ id, className, title, children }: ModalProps) {
   return (
-    <div className={`modal fade ${className}`} id={id} aria-hidden="true">
+    <div className={`modal fade ${className ?? ""}`} id={id} aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">

@@ -1,10 +1,13 @@
-// import { useQueryClient } from "@tanstack/react-query";
-import { useQueryClient } from "@tanstack/react-query";
-import { useProductFilterStore } from "@/app/product/product.store";
+import { useFilterProducts } from "../hooks/use-filter-products";
 
 export function ProductsFilter() {
-  const queryClient = useQueryClient();
-  const { filter, setFilters } = useProductFilterStore();
+  const {
+    filter,
+    handleChangeName,
+    handleChangeMinPrice,
+    handleChangeMaxPrice,
+    handleFilterProducts,
+  } = useFilterProducts();
 
   return (
     <section className="container collapse w-100" id="product-filter">
@@ -19,9 +22,7 @@ export function ProductsFilter() {
             name="name"
             id="name"
             value={!filter.name ? "" : filter.name}
-            onChange={(event) =>
-              setFilters({ ...filter, name: event.target.value })
-            }
+            onChange={handleChangeName}
           />
         </div>
         <div className="w-100 d-flex flex-column">
@@ -34,13 +35,7 @@ export function ProductsFilter() {
             name="minPrice"
             id="min-price"
             value={!filter.minPrice ? "" : filter.minPrice}
-            onChange={(event) => {
-              const value = event.target.value;
-              setFilters({
-                ...filter,
-                minPrice: value ? Number(value) : undefined,
-              });
-            }}
+            onChange={handleChangeMinPrice}
           />
         </div>
         <div className="w-100 d-flex flex-column">
@@ -53,21 +48,13 @@ export function ProductsFilter() {
             name="maxPrice"
             id="max-price"
             value={!filter.maxPrice ? "" : filter.maxPrice}
-            onChange={(event) => {
-              const value = event.target.value;
-              setFilters({
-                ...filter,
-                maxPrice: value ? Number(value) : undefined,
-              });
-            }}
+            onChange={handleChangeMaxPrice}
           />
         </div>
         <button
           type="button"
           className="btn btn-dark align-self-end"
-          onClick={() =>
-            queryClient.invalidateQueries({ queryKey: ["products"] })
-          }
+          onClick={handleFilterProducts}
         >
           Buscar
         </button>

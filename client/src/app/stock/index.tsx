@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useService } from "../../services/use-service";
 
-export function StockList() {
+export function StockIndex() {
   const { stockService } = useService();
   const [sideBarOpen, setSideBarOpen] = useState(true);
 
