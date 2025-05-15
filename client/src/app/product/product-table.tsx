@@ -1,19 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useService } from "@/services/use-service";
 import { MODALS } from "@/components/modal/types";
-import { Product } from "@/app/product/product.type";
 import { ModalOpenButton } from "@/components/modal/modal-open-button";
-import { useProductFilterStore } from "@/app/product/product.store";
+import {
+  useProductFilterStore,
+  useSelectedProductStore,
+} from "@/app/product/product.store";
 import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
 
-type ProductsTableData = {
-  onEdit: (product: Product) => void;
-  onDelete: (product: Product) => void;
-};
-
-export function ProductsTable({ onEdit, onDelete }: ProductsTableData) {
+export function ProductsTable() {
   const { productService } = useService();
   const { filter } = useProductFilterStore();
+  const { setSelectedProduct } = useSelectedProductStore();
 
   const { data: products, isPending } = useQuery({
     queryKey: ["products"],
@@ -78,7 +76,7 @@ export function ProductsTable({ onEdit, onDelete }: ProductsTableData) {
                     type="button"
                     targetId={MODALS.PRODUCT_FORM}
                     className="btn btn-primary d-flex align-items-center justify-content-center p-2"
-                    onClick={() => onEdit(product)}
+                    onClick={() => setSelectedProduct(product)}
                   >
                     <PencilSimple size={20} />
                   </ModalOpenButton>
@@ -86,7 +84,7 @@ export function ProductsTable({ onEdit, onDelete }: ProductsTableData) {
                     type="button"
                     targetId={MODALS.PRODUCT_DELETE}
                     className="btn btn-danger d-flex align-items-center justify-content-center p-2"
-                    onClick={() => onDelete(product)}
+                    onClick={() => setSelectedProduct(product)}
                   >
                     <TrashSimple size={20} />
                   </ModalOpenButton>
