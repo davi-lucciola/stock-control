@@ -13,9 +13,21 @@ export type ProductFilter = {
   maxPrice?: number;
 };
 
+export type ProductFilterStore = {
+  filter: ProductFilter;
+  setFilters: (filter?: ProductFilter) => void;
+};
+
+export type SelectedProductStore = {
+  selectedProduct?: Product;
+  setSelectedProduct: (selectedProduct?: Product) => void;
+};
+
 export const ProductSchema = z.object({
   name: z.string().trim(),
-  price: z.coerce.number().min(0.01, "O preço do produto deve ser maior que zero."),
+  price: z.coerce
+    .number()
+    .min(0.01, "O preço do produto deve ser maior que zero."),
 });
 
 export type ProductPayload = z.infer<typeof ProductSchema>;
