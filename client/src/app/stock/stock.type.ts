@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type Stock = {
   id: number;
   product: {
@@ -18,8 +20,9 @@ export type StockFilter = {
   productId?: number;
 };
 
-export type StockPaylod = {
-  productId?: number;
-  quantity?: number;
-  type?: StockType;
-};
+export const StockSchema = z.object({
+  productId: z.coerce.number(),
+  quantity: z.coerce.number().min(1, "A quantidade deve ser maior que zero."),
+});
+
+export type StockPayload = z.infer<typeof StockSchema>;

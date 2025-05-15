@@ -1,8 +1,15 @@
-import {
-  ProductFilterStore,
-  SelectedProductStore,
-} from "@/app/product/product.type";
 import { create } from "zustand";
+import { Product, ProductFilter } from "@/app/product/product.type";
+
+type ProductFilterStore = {
+  filter: ProductFilter;
+  setFilters: (filter?: ProductFilter) => void;
+};
+
+type SelectedProductStore = {
+  product?: Product;
+  setProduct: (product?: Product) => void;
+};
 
 export const useProductFilterStore = create<ProductFilterStore>((set) => ({
   filter: {},

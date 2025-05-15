@@ -2,8 +2,10 @@ import { MODALS } from "@/components/modal/types";
 import { ModalOpenButton } from "@/components/modal/modal-open-button";
 import { useQueryProducts } from "@/app/product/hooks/use-query-products";
 import { TrashSimple, PencilSimple, Plus, Minus } from "@phosphor-icons/react";
+import { useStockProductStore } from "@/app/stock/stock.store";
 
 export function ProductsTable() {
+  const { setStockProduct } = useStockProductStore();
   const { products, isPending, setProduct } = useQueryProducts();
 
   if (isPending) {
@@ -46,9 +48,7 @@ export function ProductsTable() {
                     type="button"
                     targetId={MODALS.CHANGE_STOCK_FORM}
                     className="btn btn-secondary d-flex align-items-center justify-content-center p-2"
-                    // onClick={() => {
-                    //   onChangeStock(product.id, "OUTPUT");
-                    // }}
+                    onClick={() => setStockProduct(product, "OUTPUT")}
                   >
                     <Minus size={20} />
                   </ModalOpenButton>
@@ -56,7 +56,7 @@ export function ProductsTable() {
                     type="button"
                     targetId={MODALS.CHANGE_STOCK_FORM}
                     className="btn btn-secondary d-flex align-items-center justify-content-center p-2"
-                    // onClick={() => onChangeStock(product.id, "INPUT")}
+                    onClick={() => setStockProduct(product, "INPUT")}
                   >
                     <Plus size={20} />
                   </ModalOpenButton>
