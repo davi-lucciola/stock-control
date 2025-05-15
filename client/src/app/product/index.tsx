@@ -35,7 +35,7 @@ export function ProductsIndex() {
               data-bs-target="#product-filter"
               aria-expanded={filterIsOpen}
               aria-controls="product-filter"
-              onClick={() => setFilterIsOpen(!filterIsOpen)}
+              onClick={() => setFilterIsOpen((prev) => !prev)}
             >
               {<FunnelSimple size={32} />}
             </button>
