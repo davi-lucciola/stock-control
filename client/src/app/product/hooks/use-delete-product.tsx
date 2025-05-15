@@ -15,7 +15,9 @@ export function useProductDelete() {
       productService.deleteProduct(productId),
     onSuccess: (response) => {
       toast.success(response.detail);
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({
+        queryKey: ["products", "stock-history"],
+      });
     },
     onError: httpErrorHandler,
   });

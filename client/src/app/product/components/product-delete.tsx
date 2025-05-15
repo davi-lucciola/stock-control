@@ -1,7 +1,7 @@
 import { Modal } from "@/components/modal";
 import { BaseProps } from "@/components/base-props";
 import { ModalCloseButton } from "@/components/modal/modal-close-button";
-import { useProductDelete } from "../hooks/use-delete-product";
+import { useProductDelete } from "@/app/product/hooks/use-delete-product";
 
 export function ProductDelete({ id, className }: BaseProps) {
   const { product, handleProductDelete } = useProductDelete();
