@@ -1,34 +1,32 @@
-## 📦 Pull Request
+# 📦 Pull Request
 
-### ✨ What does this PR do?
+##  What does this PR do?
 <!-- Describe the goal and scope of this pull request -->
 - [ ] Feature
 - [ ] Fix
-- [ ] Chore
+- [ ] Refactor
 - [ ] Styling
+- [ ] Docs
 - [ ] Test
+- [ ] Chore
 
-### 📄 Description
+## 📄 Resume
 <!-- Add a brief description of what’s inside the PR -->
 This PR introduces...
 
-### ✅ Related Issues
-<!-- Link related issues -->
-Closes #__
+## 🔍 Changes
+- [ ] Backend
+- [ ] Frontend
+- [ ] DevOps
+- [ ] Readme
+- [ ] Other
 
-### 🔍 Changes
-- [ ] New components
-- [ ] Lint/pre-commit updates
-- [ ] Backend logic
-- [ ] Frontend page
-- [ ] DevOps update (CI, CD)
-
-### 🧪 How to test
+## 🧪 How to test
 <!-- Describe how to test this change manually -->
 1. Run `...`
 2. Visit `/...`
 3. Ensure that `...` works
 
-### 🧠 Notes
+## 🧠 Notes
 <!-- Optional tips, tradeoffs, decisions -->
 N/A
