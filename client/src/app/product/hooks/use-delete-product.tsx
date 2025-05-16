@@ -13,11 +13,10 @@ export function useProductDelete() {
   const { mutateAsync: deleteProductMutation } = useMutation({
     mutationFn: async (productId: number) =>
       productService.deleteProduct(productId),
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       toast.success(response.detail);
-      await queryClient.invalidateQueries({
-        queryKey: ["products", "stock-history"],
-      });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["stock-history"] });
     },
     onError: httpErrorHandler,
   });
