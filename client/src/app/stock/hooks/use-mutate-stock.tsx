@@ -24,11 +24,10 @@ export function useMutateStock() {
 
       return await stockService.registerStockOut(data);
     },
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       toast.success(response.detail);
-      await queryClient.invalidateQueries({
-        queryKey: ["products", "stock-history"],
-      });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["stock-history"] });
     },
     onError: httpErrorHandler,
   });

@@ -1,11 +1,11 @@
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { ProductPayload, ProductSchema } from "@/app/product/product.type";
+import { httpErrorHandler } from "@/lib/api";
+import { useService } from "@/services/use-service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useService } from "@/services/use-service";
-import { toast } from "react-toastify";
-import { httpErrorHandler } from "@/lib/api";
-import { useSelectedProductStore } from "../product.store";
+import { useSelectedProductStore } from "@/app/product/product.store";
+import { ProductPayload, ProductSchema } from "@/app/product/product.type";
 
 export function useMutateProduct() {
   const queryClient = useQueryClient();
@@ -29,10 +29,10 @@ export function useMutateProduct() {
 
       return await productService.createProduct(data);
     },
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       form.reset();
       toast.success(response.detail);
-      await queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: httpErrorHandler,
   });
