@@ -60,7 +60,6 @@ stock-control
 ⸻
 
 ## 🪟 App Preview
->>>>>>> 5344d38 ([docs/readme] - updating readme)
 
 <img src="./.github/assets/layout-3.png">
 <img src="./.github/assets/layout-2.png">
