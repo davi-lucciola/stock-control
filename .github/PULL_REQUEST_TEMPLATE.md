@@ -19,6 +19,7 @@ This PR introduces...
 - [ ] Frontend
 - [ ] DevOps
 - [ ] Readme
+- [ ] Other
 
 ## 🧪 How to test
 <!-- Describe how to test this change manually -->
