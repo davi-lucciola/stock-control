@@ -1,4 +1,4 @@
-# 💵 Stock Control
+# 🎁 Stock Control
 
 Stock control is a project to manage products stocks and control the history of input and output of their quantities
 
@@ -11,7 +11,7 @@ Stock control is a project to manage products stocks and control the history of 
 | Backend    | Python, FastAPI, SQLModel        |
 | Frontend   | Typescript, React, Bootstrap, React Hook Form, React Query |
 | Database   | PostgreSQL (via Docker)   |
-| DevOps  | Docker, GitHub Actions |
+| DevOps  | Docker |
 | Lint  | ESLint |
 
 ⸻
