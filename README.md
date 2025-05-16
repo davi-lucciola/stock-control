@@ -1,42 +1,97 @@
-# Stock Control
+# 💵 Stock Control
 
-Project with PostgresSQL for controlling stock of products.
+Stock control is a project to manage products stocks and control the history of input and output of their quantities
 
-## Technologies
+⸻
 
-- FastAPI
-- PostgresSQL
-- ReactJS (with TypeScript)
-- Bootstrap
+## ⚙️ Tech Stack
 
-## Design
+| Layer      | Tech                              |
+|------------|-----------------------------------|
+| Backend    | Python, FastAPI, SQLModel        |
+| Frontend   | Typescript, React, Bootstrap, React Hook Form, React Query |
+| Database   | PostgreSQL (via Docker)   |
+| DevOps  | Docker, GitHub Actions |
+| Lint  | ESLint |
+
+⸻
+
+## 🚀 Features
+- 🛒 Product management with create, update and delete. 
+- 🧰 Stock history with inputs and outputs of product quantities
+- 💻 Simple and intuitive UI 
+- 🐳 Dockerized development environment
+
+⸻
+
+## 📂 Project Structure
+
+<pre>
+
+```
+stock-control
+├── client/                # React App
+│   ├── src/           
+│   │   ├── app/           # App Routing
+│   │   ├── components/    # Global Components
+│   │   ├── lib/           # Lib Modules
+│   │   ├── services/      # App Services
+│   │   └── main.tsx       # React Entrypoint
+│   └── .env.exemple       # Env Variables Exemple
+│
+├── server/                # FastAPI APP
+│   ├── migrations/        # Database Migrations   
+│   ├── api/               # Api Module
+│   │   ├── controllers/   # Endpoints Definition 
+│   │   ├── models/        # App Entities and Schemas
+│   │   ├── repositories/  # App Repositories
+│   │   ├── services/      # App Services
+│   │   ├── __init__.py    # Python Module Init File     
+│   │   ├── db.py          # Database Config
+│   │   └── main.py        # FastAPI Entrypoint
+│   └── .env.exemple       # Env Variables Exemple
+│
+├── .github/               # CI Config
+├── docker-compose.yml			
+└── README.md
+```
+</pre>
+
+⸻
+
+## 🪟 App Preview
 
 <img src="./.github/assets/layout-3.png">
 <img src="./.github/assets/layout-2.png">
 <img src="./.github/assets/layout-1.png">
 
-## API Endpoints
+⸻
 
-For see all the documentation on swagger access `/docs` endpoint.
+## 🚀 Getting Started
 
-- Product
-  - Search Products: GET    - `/product`
-  - Create Product : POST   - `/product`
-  - Update Product : PUT    - `/product/{id}`
-  - Delete Product : DELETE - `/product/{id}`
-  
-- Stock
-  - History Stock  : GET    - `/stock/history`
-  - Input Stock    : POST   - `/stock/in`
-  - Output Stock   : DELETE - `/stock/out`
+### 📦 Requirements
+	• Python 3.10+
+	• Node.js 20+
+	• Docker & Docker Compose
 
-## How to run local
+⸻
 
-### With Docker
+## 🐳 Start with Docker
 
-1. Build the repository image:
-> `docker compose build`
-2. Run the container:
-> `docker compose up -d`
+### Build and run everything
 
-Finish! Now the application are running in your machine!
+`docker-compose up --build`
+
+Access the frontend at http://localhost:5173.
+
+You also can access the backend API docs at http://localhost:8080/docs.
+
+⸻
+
+<!-- ## 🧪 Run Tests
+
+Backend tests (pytest):
+
+- cd server
+- uv sync
+- uv run pytest -->
